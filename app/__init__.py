@@ -45,4 +45,9 @@ def create_app(config_name=None):
             return jsonify({'erro': 'Erro interno do servidor'}), 500
         return error, 500
 
+    with app.app_context():
+        from app import models  # noqa: F401
+        db.create_all()
+
+
     return app

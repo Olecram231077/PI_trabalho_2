@@ -1,15 +1,22 @@
+import uuid
+
+
 def criar_base(client):
+    sufixo = uuid.uuid4().hex[:8]
+
     titular = client.post('/api/professores', json={
-        'nome': 'Titular Teste', 'email': 'titular@escola.com'
+        'nome': 'Titular Teste', 'email': f'titular-{sufixo}@escola.com'
     }).get_json()
     substituto = client.post('/api/professores', json={
-        'nome': 'Substituto Teste', 'email': 'substituto@escola.com'
+        'nome': 'Substituto Teste', 'email': f'substituto-{sufixo}@escola.com'
     }).get_json()
-    disciplina = client.post('/api/disciplinas', json={'nome': 'Disciplina Teste'}).get_json()
+    disciplina = client.post('/api/disciplinas', json={
+        'nome': f'Disciplina Teste {sufixo}'
+    }).get_json()
     return titular, substituto, disciplina
 
 
-def test_criar_substituicao(client):
+def test_criar_substituicao(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     resposta = client.post('/api/substituicoes', json={
@@ -26,7 +33,7 @@ def test_criar_substituicao(client):
     assert dados['data_inicio'] == '2026-11-01'
 
 
-def test_substituicao_mesmo_professor(client):
+def test_substituicao_mesmo_professor(db, client):
     titular, _, disciplina = criar_base(client)
 
     resposta = client.post('/api/substituicoes', json={
@@ -39,7 +46,7 @@ def test_substituicao_mesmo_professor(client):
     assert resposta.get_json()['campo'] == 'professor_substituto_id'
 
 
-def test_substituicao_sem_data_inicio(client):
+def test_substituicao_sem_data_inicio(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     resposta = client.post('/api/substituicoes', json={
@@ -51,7 +58,7 @@ def test_substituicao_sem_data_inicio(client):
     assert resposta.get_json()['campo'] == 'data_inicio'
 
 
-def test_substituicao_data_invalida(client):
+def test_substituicao_data_invalida(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     resposta = client.post('/api/substituicoes', json={
@@ -64,7 +71,7 @@ def test_substituicao_data_invalida(client):
     assert resposta.get_json()['campo'] == 'data_inicio'
 
 
-def test_substituicao_data_fim_anterior(client):
+def test_substituicao_data_fim_anterior(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     resposta = client.post('/api/substituicoes', json={
@@ -78,7 +85,7 @@ def test_substituicao_data_fim_anterior(client):
     assert resposta.get_json()['campo'] == 'data_fim'
 
 
-def test_remover_substituicao(client):
+def test_remover_substituicao(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     criada = client.post('/api/substituicoes', json={
@@ -92,7 +99,7 @@ def test_remover_substituicao(client):
     assert resposta.status_code == 204
 
 
-def test_nao_remover_professor_com_substituicao(client):
+def test_nao_remover_professor_com_substituicao(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     client.post('/api/substituicoes', json={
@@ -106,7 +113,7 @@ def test_nao_remover_professor_com_substituicao(client):
     assert resposta.status_code == 409
 
 
-def test_estatisticas(client):
+def test_estatisticas(db, client):
     titular, substituto, disciplina = criar_base(client)
 
     client.post('/api/substituicoes', json={
