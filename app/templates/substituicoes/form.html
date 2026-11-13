@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Substituição — Sistema de Gerenciamento{% endblock %}
+{% block pagina %}substituicao-form{% endblock %}
+
+{% block conteudo %}
+<h1 class="h3 mb-4">Nova substituição</h1>
+
+<form id="form-substituicao" novalidate>
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <label for="professor_titular_id" class="form-label">Professor titular <span aria-hidden="true">*</span></label>
+      <select class="form-select" id="professor_titular_id" name="professor_titular_id" required aria-required="true">
+        <option value="">Selecione...</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="professor_substituto_id" class="form-label">Professor substituto <span aria-hidden="true">*</span></label>
+      <select class="form-select" id="professor_substituto_id" name="professor_substituto_id" required aria-required="true">
+        <option value="">Selecione...</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="disciplina_id" class="form-label">Disciplina <span aria-hidden="true">*</span></label>
+      <select class="form-select" id="disciplina_id" name="disciplina_id" required aria-required="true">
+        <option value="">Selecione...</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="data_inicio" class="form-label">Data de início <span aria-hidden="true">*</span></label>
+      <input type="date" class="form-control" id="data_inicio" name="data_inicio" required aria-required="true">
+    </div>
+
+    <div class="col-md-4">
+      <label for="data_fim" class="form-label">Data de fim</label>
+      <input type="date" class="form-control" id="data_fim" name="data_fim">
+    </div>
+
+    <div class="col-12">
+      <label for="motivo" class="form-label">Motivo</label>
+      <textarea class="form-control" id="motivo" name="motivo" rows="2"></textarea>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Registrar</button>
+    <a href="{{ url_for('views.substituicoes') }}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

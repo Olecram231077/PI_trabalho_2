@@ -1,0 +1,24 @@
+databases:
+  - name: professores-db
+    databaseName: professores
+    user: professores_user
+    plan: free
+
+services:
+  - type: web
+    name: sistema-professores
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: professores-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.9

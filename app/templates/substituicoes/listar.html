@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}Substituições — Sistema de Gerenciamento{% endblock %}
+{% block pagina %}substituicoes-lista{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h3 mb-0">Substituições</h1>
+  <a href="{{ url_for('views.substituicao_nova') }}" class="btn btn-primary">+ Nova substituição</a>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <caption class="sr-only">Lista de substituições registradas</caption>
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Professor titular</th>
+        <th scope="col">Professor substituto</th>
+        <th scope="col">Disciplina</th>
+        <th scope="col">Início</th>
+        <th scope="col">Fim</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody id="corpo-tabela"></tbody>
+  </table>
+</div>
+{% endblock %}

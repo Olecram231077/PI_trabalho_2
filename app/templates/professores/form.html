@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block titulo %}Professor — Sistema de Gerenciamento{% endblock %}
+{% block pagina %}professor-form{% endblock %}
+
+{% block conteudo %}
+<h1 class="h3 mb-4" id="titulo-form">Novo professor</h1>
+
+<form id="form-professor" data-professor-id="{{ professor_id or '' }}" novalidate>
+  <fieldset class="mb-4">
+    <legend class="h5">Dados pessoais</legend>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="nome" class="form-label">Nome completo <span aria-hidden="true">*</span></label>
+        <input type="text" class="form-control" id="nome" name="nome" required
+               aria-required="true" autocomplete="name">
+      </div>
+
+      <div class="col-md-6">
+        <label for="email" class="form-label">E-mail <span aria-hidden="true">*</span></label>
+        <input type="email" class="form-control" id="email" name="email" required
+               aria-required="true" autocomplete="email">
+      </div>
+
+      <div class="col-md-6">
+        <label for="telefone" class="form-label">Telefone</label>
+        <input type="tel" class="form-control" id="telefone" name="telefone" autocomplete="tel">
+      </div>
+
+      <div class="col-md-6">
+        <label for="especialidade" class="form-label">Especialidade</label>
+        <input type="text" class="form-control" id="especialidade" name="especialidade">
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="mb-4">
+    <legend class="h5">Endereço</legend>
+
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label for="cep" class="form-label">CEP</label>
+        <input type="text" class="form-control" id="cep" name="cep"
+               inputmode="numeric" maxlength="9" autocomplete="postal-code"
+               aria-describedby="ajuda-cep">
+        <div id="ajuda-cep" class="form-text">Digite os 8 dígitos para preencher o endereço automaticamente.</div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="logradouro" class="form-label">Logradouro</label>
+        <input type="text" class="form-control" id="logradouro" name="logradouro" autocomplete="street-address">
+      </div>
+
+      <div class="col-md-3">
+        <label for="uf" class="form-label">UF</label>
+        <input type="text" class="form-control" id="uf" name="uf" maxlength="2" autocomplete="address-level1">
+      </div>
+
+      <div class="col-md-6">
+        <label for="bairro" class="form-label">Bairro</label>
+        <input type="text" class="form-control" id="bairro" name="bairro">
+      </div>
+
+      <div class="col-md-6">
+        <label for="cidade" class="form-label">Cidade</label>
+        <input type="text" class="form-control" id="cidade" name="cidade" autocomplete="address-level2">
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="mb-4">
+    <legend class="h5">Disciplinas</legend>
+    <div id="lista-disciplinas" class="row g-2">
+      <p class="text-muted mb-0">Carregando disciplinas...</p>
+    </div>
+  </fieldset>
+
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{{ url_for('views.professores') }}" class="btn btn-secondary">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

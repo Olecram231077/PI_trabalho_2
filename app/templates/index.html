@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block titulo %}Dashboard — Sistema de Gerenciamento de Professores{% endblock %}
+{% block pagina %}dashboard{% endblock %}
+
+{% block conteudo %}
+<h1 class="h3 mb-4">Dashboard</h1>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-4">
+    <div class="card card-total h-100">
+      <div class="card-body">
+        <p class="text-muted mb-1">Professores cadastrados</p>
+        <p class="numero mb-0" id="total-professores">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-total h-100">
+      <div class="card-body">
+        <p class="text-muted mb-1">Disciplinas</p>
+        <p class="numero mb-0" id="total-disciplinas">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-total h-100">
+      <div class="card-body">
+        <p class="text-muted mb-1">Substituições registradas</p>
+        <p class="numero mb-0" id="total-substituicoes">0</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">Substituições por disciplina</div>
+      <div class="card-body">
+        <canvas id="grafico-disciplinas" role="img"
+                aria-label="Gráfico de barras com o número de substituições por disciplina"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">Substituições por mês</div>
+      <div class="card-body">
+        <canvas id="grafico-meses" role="img"
+                aria-label="Gráfico de linha com o número de substituições por mês"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

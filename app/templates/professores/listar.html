@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Professores — Sistema de Gerenciamento{% endblock %}
+{% block pagina %}professores-lista{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h3 mb-0">Professores</h1>
+  <a href="{{ url_for('views.professor_novo') }}" class="btn btn-primary">+ Novo professor</a>
+</div>
+
+<div class="mb-3">
+  <label for="campo-busca" class="form-label">Buscar professor por nome</label>
+  <input type="search" id="campo-busca" class="form-control" placeholder="Digite o nome...">
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <caption class="sr-only">Lista de professores cadastrados</caption>
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Especialidade</th>
+        <th scope="col">Disciplinas</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody id="corpo-tabela"></tbody>
+  </table>
+</div>
+{% endblock %}
