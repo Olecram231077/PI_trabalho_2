@@ -1,6 +1,5 @@
 import os
 
-
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'chave-dev-insegura')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -28,9 +27,22 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 
+class ProductionConfig(Config):
+    DEBUG = False
+
+    @staticmethod
+    def _ajustar_url(url):
+        if url and url.startswith('postgresql://'):
+            return url.replace('postgresql://', 'postgresql+psycopg://', 1)
+        return url
+
+    SQLALCHEMY_DATABASE_URI = _ajustar_url(os.getenv('DATABASE_URL'))
+
+
 config_by_name = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
     'default': DevelopmentConfig,
 }
+
